@@ -1,23 +1,23 @@
 let setAlarmButton = document.getElementById('set-alarm-button');
 let activeTimersDiv = document.getElementById('active-timers');
-let idGiver = 1; // to give unique ids
-let intervalIdMap = new Map(); // map to take intervalid related to a  div
+let idGiver = 1; 
+let intervalIdMap = new Map(); 
 setAlarmButton.addEventListener('click',() => {
      let timerDiv = document.createElement('div');
      let timerDivId = idGiver++;
-     timerDiv.setAttribute('id',timerDivId); // setting id of timerdiv
+     timerDiv.setAttribute('id',timerDivId); 
      timerDiv.setAttribute('class','active-timer') 
-     let hrs = parseInt(document.getElementById('hours').value, 10);// base 10 values
+     let hrs = parseInt(document.getElementById('hours').value, 10);
      let mins = parseInt(document.getElementById('minutes').value, 10);
      let seconds = parseInt(document.getElementById('seconds').value, 10);
      if(isNaN(hrs) || isNaN(mins) || isNaN(seconds)){
-        return; // is user enter other than number then we will not do anything
+        return; 
      }
 
-     let time = hrs * 60 * 60 + mins * 60 + seconds; // calculating time in seconds
-     time = time * 1000; // making it according to setTime and setInterval functions
+     let time = hrs * 60 * 60 + mins * 60 + seconds; 
+     time = time * 1000; 
  
-     // making timer div dynamically and appending it to active timer div
+     
      timerDiv.innerHTML = 
      `
      <h5>Time Left :</h5>
@@ -33,21 +33,21 @@ setAlarmButton.addEventListener('click',() => {
       `
 
      activeTimersDiv.appendChild(timerDiv);
-     setTimer(timerDivId,time); // calling setTimer function to set timer of this div
+     setTimer(timerDivId,time); 
    
 })
 
 function sayHello(timerDivId) {
-    let timerDiv = document.getElementById(timerDivId); // getting div
-    let timerDiveChildren = timerDiv.children[1]; // second element which is 'active-timer-input-section'
-    const spans = timerDiveChildren.getElementsByTagName("span"); //getting all the spans
-    let hrs = parseInt(spans[0].textContent); // taking textContent inside each span
+    let timerDiv = document.getElementById(timerDivId); 
+    let timerDiveChildren = timerDiv.children[1]; 
+    const spans = timerDiveChildren.getElementsByTagName("span"); 
+    let hrs = parseInt(spans[0].textContent); 
     let mins = parseInt(spans[2].textContent);
     let seconds = parseInt(spans[4].textContent);
-    let time = hrs * 60 * 60 + mins * 60 + seconds; // calculating current time
-    time-=1; // decreamenting time by one each time after every second
+    let time = hrs * 60 * 60 + mins * 60 + seconds;
+    time-=1; 
     if(time === 0){
-        // if time == 0 that means our timer has finished so we will change our div
+        
         timerDiveChildren.innerHTML = "Timer is Up!"
         timerDiv.children[0].innerHTML = '';
         timerDiv.style.backgroundColor='yellow'
@@ -63,7 +63,7 @@ function sayHello(timerDivId) {
 
     }
     else{
-        // if the timer is not 0 then we will set updated time
+      
         hrs = Math.floor(time / (60 * 60));
         time = time % (60 * 60);
         mins = Math.floor(time / (60));
@@ -79,10 +79,10 @@ function sayHello(timerDivId) {
 function deleteActiveTimer(divId) {
     const parentElement = document.getElementById('active-timers');
     const divToRemove = document.getElementById(divId);
-    let intervalId = intervalIdMap.get(divId); // getting unique setInterval id related to this timer div
+    let intervalId = intervalIdMap.get(divId); 
     intervalIdMap.delete(divId);
     if (divToRemove) {
-        // Remove the div element from its parent
+        
         parentElement.removeChild(divToRemove);
         clearInterval(intervalId);
 
